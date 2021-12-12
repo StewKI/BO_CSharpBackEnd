@@ -1,0 +1,15 @@
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/C#BackEnd
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/C#BackEnd.deps.json
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/C#BackEnd.runtimeconfig.json
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/C#BackEnd.dll
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/ref/C#BackEnd.dll
+/home/stewki/Prog/MtsApp/C#BackEnd/bin/Debug/net6.0/C#BackEnd.pdb
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.csproj.AssemblyReference.cache
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.GeneratedMSBuildEditorConfig.editorconfig
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.AssemblyInfoInputs.cache
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.AssemblyInfo.cs
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.csproj.CoreCompileInputs.cache
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.dll
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/ref/C#BackEnd.dll
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.pdb
+/home/stewki/Prog/MtsApp/C#BackEnd/obj/Debug/net6.0/C#BackEnd.genruntimeconfig.cache
