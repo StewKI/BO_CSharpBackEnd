@@ -39,6 +39,7 @@ public class Interval{
 
   public bool NoDuration() => endTime-startTime == new TimeSpan(0);
 
+
   public Interval? Intersect(Interval other){
     if(GetStartTime() < other.GetStartTime()){
       if(GetEndTime() < other.GetStartTime()){
@@ -58,7 +59,7 @@ public class Interval{
     }
     else{
       if(other.GetEndTime() < GetStartTime()){
-        //4rd
+        //4th
         return null;
       }
       else{
@@ -96,6 +97,16 @@ public class Interval{
         return null;
     }
 
+  }
+
+  public static List<Interval> UnifyAll(List<Interval> times){
+    for(int i = 0; i<times.Count()-1; i++){
+      for(int j = i+1; j<times.Count(); j++){
+        if(times[i].Intersect(times[j]) != null);
+        //TODO implement...
+      }
+    }
+    return null; //delete this line
   }
 
   public static DateTime ConstructDT(DateTime dateFrom, DateTime timeFrom){
