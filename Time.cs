@@ -22,7 +22,7 @@ public class Interval{
     else endTime = startTime+dur;
   }
 
-  public Interval() { startTime = DateTime.Now; endTime = DateTime.Now; }
+  public Interval() { DateTime now = DateTime.Now; startTime = now; endTime = now; }
   public Interval(DateTime time) { SetStartTime(time); SetEndTime(time); }
   public Interval(DateTime sTime, DateTime eTime) { SetStartTime(sTime); SetEndTime(eTime); }
   public Interval(DateTime sTime, TimeSpan dur) { SetStartTime(sTime); SetDuration(dur); }
