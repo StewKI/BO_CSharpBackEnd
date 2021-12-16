@@ -1,7 +1,7 @@
 
 public class Interval{
-  DateTime startTime, endTime;
-  int intesectType;
+  private DateTime startTime, endTime;
+  private int intesectType;
 
   public DateTime GetStartTime() => startTime;
   public DateTime GetEndTime() => endTime;
@@ -100,6 +100,10 @@ public class Interval{
   }
 
   public static List<Interval> UnifyAll(List<Interval> times){
+    if(times.Count() < 2) return times;
+
+    return times;
+
     for(int i = 0; i<times.Count()-1; i++){
       for(int j = i+1; j<times.Count(); j++){
         if(times[i].Intersect(times[j]) != null);
@@ -107,6 +111,72 @@ public class Interval{
       }
     }
     return null; //delete this line
+  }
+
+  public static List<Interval> SortByStartTime(List<Interval> times, bool asc = true){
+    //times.Sort();  TODO research    
+    for(int i = 0; i<times.Count()-1; i++){
+      for(int j = i+1; j<times.Count(); j++){
+        if(times[i].GetStartTime()>times[j].GetStartTime() == asc){
+          var T = times[i];
+          times[i] = times[j];
+          times[j] = T;
+        }
+      }
+    }
+    return times;
+  }
+
+  public static List<Interval> Crop(List<Interval> times, Interval toInterval){
+    //times = UnifyAll(times);
+    List<Interval> R = new List<Interval>();
+    for(int i = 0; i<times.Count(); i++){
+      Interval? intersect = times[i].Intersect(toInterval);
+      if(intersect != null){
+        R.Add(intersect);
+      }
+    }
+    return R;
+  }
+
+  private static bool isSorted(List<Interval> times){
+    for(int i = 1; i<times.Count(); i++){
+      if(times[i-1].GetStartTime() > times[i].GetStartTime()) 
+        return false;
+    }
+    return true;
+  }
+
+  public static List<Interval> Invert(List<Interval> times, Interval inInterval){
+    if(times.Count()>0){
+      times = Crop(times, inInterval);
+      if(!isSorted(times)){
+        times = SortByStartTime(times);
+      }
+      
+      List<Interval> R = new List<Interval>();
+
+      if(inInterval.GetStartTime() < times[0].GetStartTime()){
+        R.Add(new Interval(inInterval.GetStartTime(), 
+                           times[0].GetStartTime()));
+      }
+
+      for(int i = 1; i<times.Count(); i++){
+        if(times[i-1].GetEndTime() < times[i].GetStartTime()){
+          R.Add(new Interval(times[i-1].GetEndTime(), 
+                            times[0].GetStartTime()));
+        }
+      }
+
+      if(times[times.Count()-1].GetEndTime() < inInterval.GetEndTime()){
+        R.Add(new Interval(times[times.Count()-1].GetEndTime(),
+                           inInterval.GetEndTime()));
+      }
+      return R;
+    }
+    else{
+      throw new Exception("Error! Empty array \"Times\"!");
+    }
   }
 
   public static DateTime ConstructDT(DateTime dateFrom, DateTime timeFrom){
