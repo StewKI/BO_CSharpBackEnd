@@ -1,1 +1,5 @@
 obj/Debug/net6.0/C#BackEnd.csproj.AssemblyReference.cache
+.vscode
+bin
+obj
+C#BackEnd.csproj
