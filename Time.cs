@@ -2,11 +2,13 @@
 public class Interval{
   private DateTime startTime, endTime;
   private int intesectType;
+  private Task? refferedTask;
 
   public DateTime GetStartTime() => startTime;
   public DateTime GetEndTime() => endTime;
   public TimeSpan GetDuration() => endTime-startTime;
   public int GetIntersectType() => intesectType;
+  public Task? GetRefferedTask() => refferedTask;
 
   public void SetStartTime(DateTime sTime) {
     if(sTime >= endTime) 
@@ -29,11 +31,13 @@ public class Interval{
     else
       throw new Exception("Invalid intersect type provided: " + type.ToString());
   }
+  public void SetRefferedTask(Task rTask) => refferedTask = rTask;
 
   public Interval() { DateTime now = DateTime.Now; startTime = now; endTime = now; }
   public Interval(DateTime time) { SetStartTime(time); SetEndTime(time); }
   public Interval(DateTime sTime, DateTime eTime) { SetStartTime(sTime); SetEndTime(eTime); }
   public Interval(DateTime sTime, DateTime eTime, int intersectType) { SetStartTime(sTime); SetEndTime(eTime); SetIntersectType(intersectType); }
+  public Interval(DateTime sTime, DateTime eTime, Task refferedTask) { SetStartTime(sTime); SetEndTime(eTime); this.refferedTask = refferedTask; }
   public Interval(DateTime sTime, TimeSpan dur) { SetStartTime(sTime); SetDuration(dur); }
   public Interval(Interval toCopy) { SetStartTime(toCopy.GetStartTime()); SetEndTime(toCopy.GetEndTime()); }
 
