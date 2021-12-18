@@ -7,28 +7,47 @@ public class SmartToDo{
   private Interval Afternoon; //Default: Afternoon(12-17)
   private Interval Evening;   //Default: Evening(17-22)
 
-  private List<Interval> UsedTime;
+  private float allowedOffset;
 
-  public SmartToDo(){
+  //private List<Interval> UsedTime;
+
+  public SmartToDo(float allowedOffset = 5f){
     tasks = new List<Task>();
 
     Morning   = new Interval(new DateTime(1,1,1, 7,0,0), new DateTime(1,1,1,12,0,0));
     Afternoon = new Interval(new DateTime(1,1,1,12,0,0), new DateTime(1,1,1,17,0,0));
     Evening   = new Interval(new DateTime(1,1,1,17,0,0), new DateTime(1,1,1,22,0,0));
 
-    UsedTime = new List<Interval>();
+    this.allowedOffset = allowedOffset;
+
+    //UsedTime = new List<Interval>();
   }
 
-  public void AddTask(Task newTask){
-    
+  private void AddTask(Task newTask){
+    //Check reccomended
+    tasks.Add(newTask);
+    SortTasks();
+    //UsedTime = CalcUsedTime(new Interval(DateTime.Today, new TimeSpan(30,0,0)));
   }
 
-  public List<Interval> newTaskCheck(Task newTask, Interval preferedInterval){
-    return new List<Interval>();//delete
-    //TODO implement
+  public List<Interval> newTaskCheck(Task newTask){
+    return CalcUsedTime(newTask.GetTime());
+    //RETURNS list of used times in preffered time if exists
   }  
 
-  private List<Interval> FindUsedTime(Interval period){
+  public List<Interval> newTaskCheck(Task newTask, Interval preferedInterval){
+    var R = CalcFreeTime(preferedInterval);
+    var r = new List<Interval>();
+    foreach(var i in R){
+      if(i.GetDuration() > (newTask.GetTime().GetDuration() * (1f-allowedOffset/100f))){
+        R.Add(i);
+      }
+    }
+    return r;
+    //RETURNS list of free times in prefferedInterval which can fit newTask
+  }  
+
+  private List<Interval> CalcUsedTime(Interval period){
     List<Interval> R = new List<Interval>();
     for(int i = 0; i<tasks.Count(); i++){
       var newTimes = tasks[i].UsedTime(period);
@@ -40,7 +59,20 @@ public class SmartToDo{
     return R;
   }
 
-  private List<Interval> FindFreeTime(Interval period){
-    return Interval.Invert(Interval.Crop(UsedTime, period), period);
+  private List<Interval> CalcFreeTime(Interval period){
+    return Interval.Invert(CalcUsedTime(period), period);
+  }
+
+  public void SortTasks(bool asc = true){
+    //times.Sort();  TODO research  
+    for(int i = 0; i<tasks.Count()-1; i++){
+      for(int j = i+1; j<tasks.Count(); j++){
+        if(tasks[i].GetTime().GetStartTime()>tasks[j].GetTime().GetStartTime() == asc){
+          var T = tasks[i];
+          tasks[i] = tasks[j];
+          tasks[j] = T;
+        }
+      }
+    }
   }
 }
