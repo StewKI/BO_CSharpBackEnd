@@ -11,8 +11,10 @@ public class Interval{
   public Task? GetRefferedTask() => refferedTask;
 
   public void SetStartTime(DateTime sTime) {
-    if(sTime >= endTime) 
+    if(sTime >= endTime) {
+      System.Console.WriteLine(sTime + "  --  " + endTime); //DEBUG
       throw new Exception("Error! New StartTime is AFTER current EndTime!");
+    }
     else startTime = sTime;
   }
   public void SetEndTime(DateTime eTime) {
@@ -34,12 +36,21 @@ public class Interval{
   public void SetRefferedTask(Task rTask) => refferedTask = rTask;
 
   public Interval() { DateTime now = DateTime.Now; startTime = now; endTime = now; }
-  public Interval(DateTime time) { SetStartTime(time); SetEndTime(time); }
-  public Interval(DateTime sTime, DateTime eTime) { SetStartTime(sTime); SetEndTime(eTime); }
-  public Interval(DateTime sTime, DateTime eTime, int intersectType) { SetStartTime(sTime); SetEndTime(eTime); SetIntersectType(intersectType); }
-  public Interval(DateTime sTime, DateTime eTime, Task refferedTask) { SetStartTime(sTime); SetEndTime(eTime); this.refferedTask = refferedTask; }
-  public Interval(DateTime sTime, TimeSpan dur) { SetStartTime(sTime); SetDuration(dur); }
-  public Interval(Interval toCopy) { SetStartTime(toCopy.GetStartTime()); SetEndTime(toCopy.GetEndTime()); }
+  public Interval(DateTime time) { startTime = time; SetEndTime(time); }
+  public Interval(DateTime sTime, DateTime eTime) { startTime = sTime; SetEndTime(eTime); }
+  public Interval(DateTime sTime, DateTime eTime, int intersectType) { startTime = sTime; SetEndTime(eTime); SetIntersectType(intersectType); }
+  public Interval(DateTime sTime, DateTime eTime, Task refferedTask) { startTime = sTime; SetEndTime(eTime); this.refferedTask = refferedTask; }
+  public Interval(DateTime sTime, TimeSpan dur) { startTime = sTime; SetDuration(dur); }
+  public Interval(Interval toCopy) { startTime = toCopy.GetStartTime(); SetEndTime(toCopy.GetEndTime()); }
+  public Interval(DateTime date, int sHour, int sMin, int eHour, int eMin){
+    startTime = new DateTime(date.Year, date.Month, date.Day, sHour, sMin, 0);
+    SetEndTime(new DateTime(date.Year, date.Month, date.Day, eHour, eMin, 0));
+  }
+
+  public override string ToString()
+  {
+    return startTime.ToString() + " <--> " + endTime.ToString();
+  }
 
   public bool NoDuration() => endTime-startTime == new TimeSpan(0);
 
