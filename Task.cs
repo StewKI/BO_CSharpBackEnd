@@ -8,6 +8,7 @@ public class Task
 
   protected int priority;
 
+  public string GetTitle() => title;
   public Interval GetTime() => time;
 
   public void SetNewTime(Interval time) => this.time=time;
