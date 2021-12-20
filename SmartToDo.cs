@@ -40,7 +40,7 @@ public class SmartToDo{
     var r = new List<Interval>();
     foreach(var i in R){
       if(i.GetDuration() > (newTask.GetTime().GetDuration() * (1f-allowedOffset/100f))){
-        R.Add(i);
+        r.Add(i);
       }
     }
     return r;
