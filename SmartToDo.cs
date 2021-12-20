@@ -23,7 +23,7 @@ public class SmartToDo{
     //UsedTime = new List<Interval>();
   }
 
-  private void AddTask(Task newTask){
+  public void AddTask(Task newTask){ //SHOULD BE PRIVATE
     //Check reccomended
     tasks.Add(newTask);
     SortTasks();
@@ -32,7 +32,7 @@ public class SmartToDo{
 
   public List<Interval> newTaskCheck(Task newTask){
     return CalcUsedTime(newTask.GetTime());
-    //RETURNS list of used times in preffered time if exists
+    //RETURNS list of USED times in preffered time if exists
   }  
 
   public List<Interval> newTaskCheck(Task newTask, Interval preferedInterval){
@@ -44,7 +44,7 @@ public class SmartToDo{
       }
     }
     return r;
-    //RETURNS list of free times in prefferedInterval which can fit newTask
+    //RETURNS list of FREE times in prefferedInterval which can fit newTask
   }  
 
   private List<Interval> CalcUsedTime(Interval period){
