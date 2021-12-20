@@ -18,8 +18,10 @@ public class Interval{
     else startTime = sTime;
   }
   public void SetEndTime(DateTime eTime) {
-    if(eTime <= startTime) 
+    if(eTime <= startTime) {
+      System.Console.WriteLine(startTime + "  --  " + eTime); //DEBUG
       throw new Exception("Error! New EndTime is BEFORE current StartTime!");
+    }
     else endTime = eTime;
   }
   public void SetDuration(TimeSpan dur) {
@@ -49,7 +51,7 @@ public class Interval{
 
   public override string ToString()
   {
-    return startTime.ToString() + " <--> " + endTime.ToString();
+    return /*"("+refferedTask.GetTitle()+")"+*/ startTime.ToShortTimeString() + " <--> " + endTime.ToShortTimeString();
   }
 
   public bool NoDuration() => endTime-startTime == new TimeSpan(0);
@@ -130,6 +132,7 @@ public class Interval{
 
   public static List<Interval> SortByStartTime(List<Interval> times, bool asc = true){
     //times.Sort();  TODO research    
+    System.Console.WriteLine("Sorting...");
     for(int i = 0; i<times.Count()-1; i++){
       for(int j = i+1; j<times.Count(); j++){
         if(times[i].GetStartTime()>times[j].GetStartTime() == asc){
@@ -154,6 +157,7 @@ public class Interval{
     return R;
   }
 
+  //TODO check correctness
   private static bool isSorted(List<Interval> times){
     for(int i = 1; i<times.Count(); i++){
       if(times[i-1].GetStartTime() > times[i].GetStartTime()) 
@@ -162,12 +166,21 @@ public class Interval{
     return true;
   }
 
+  //DEBUG
+  private static void PrintList(List<Interval> times, string pre){
+    foreach(var i in times){
+      System.Console.WriteLine(pre + i.ToString());
+    }
+  }
+
   public static List<Interval> Invert(List<Interval> times, Interval inInterval){
     if(times.Count()>0){
       times = Crop(times, inInterval);
       if(!isSorted(times)){
         times = SortByStartTime(times);
       }
+
+      PrintList(times,"INVERT* ");
       
       List<Interval> R = new List<Interval>();
 
@@ -178,8 +191,8 @@ public class Interval{
 
       for(int i = 1; i<times.Count(); i++){
         if(times[i-1].GetEndTime() < times[i].GetStartTime()){
-          R.Add(new Interval(times[i-1].GetEndTime(), 
-                            times[0].GetStartTime()));
+          System.Console.WriteLine(new Interval(times[i-1].GetEndTime(), times[i].GetStartTime())); //DEBUG
+          R.Add(new Interval(times[i-1].GetEndTime(), times[i].GetStartTime()));
         }
       }
 
@@ -190,7 +203,7 @@ public class Interval{
       return R;
     }
     else{
-      throw new Exception("Error! Empty array \"Times\"!");
+      return new List<Interval>();
     }
   }
 
